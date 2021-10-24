@@ -1,22 +1,11 @@
-$(document).ready(function () {
-  $(document).bind("mouseup", mouseUp());
+document.addEventListener("mouseup", (event) => {
+  if (window.getSelection().toString().length) {
+    let exactText = window.getSelection().toString();
+    console.log(exactText);
+  }
 });
 
-function getSelectionText() {
-  var t = "";
-  if (window.getSelection) {
-    t = window.getSelection();
-  } else if (document.getSelection) {
-    t = document.getSelection();
-  } else if (document.selection) {
-    t = document.selection.createRange().text;
-  }
-  return t;
-}
-
-function mouseUp() {
-  var st = getSelectionText();
-  if (st != "") {
-    alert("You selected:\n" + st);
-  }
-}
+document.addEventListener("selectionchange", (e) => {
+  console.log("Archor node - ", window.getSelection().anchorNode);
+  console.log("Focus Node - ", window.getSelection().toString());
+});
