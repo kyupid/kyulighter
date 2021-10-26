@@ -20,7 +20,7 @@ document.addEventListener("mouseup", (event) => {
 
     let parentElement = selection.anchorNode.parentElement;
 
-    let listByTagName = document.getElementsByTagName(a.tagName);
+    let listByTagName = document.getElementsByTagName(parentElement.tagName);
 
     let indexOfTags = 0;
     for (let i = 0; i < listByTagName.length; i++) {
@@ -29,6 +29,6 @@ document.addEventListener("mouseup", (event) => {
       }
     }
 
-    console.log(indexOfTags);
+    console.log(parentElement.tagName, indexOfTags);
   }
 });
