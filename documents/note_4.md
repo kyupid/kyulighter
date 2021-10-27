@@ -41,9 +41,15 @@ HTMLCollection API 메서드 중에서 `item()`이 있다. 배열에서 `element
 
 `document.getElementsByTagName`을 먼저 검색하고 저장했던 index로 `item(index)`로 Node를 가져온다.
 
-원래 계획은 이 Node에서 저장해놨던 start and end offset 으로 찾으려 했으나 만약에 그 Node에 하이라이트가 생길수록 offset이 플레인 텍스트였을때와 달리 계속 변경되는 점이 구현을 어렵게 할것 같았다.
+원래 계획은 이 Node에서 저장해놨던 start and end offset 으로 찾으려 했으나,
+
+만약에 그 Node에 하이라이트가 생길수록 offset이 플레인 텍스트였을때와 달리 계속 변경되는 점이 구현을 어렵게 할것 같았다.
 
 그래서 바꾼 계획은 그 태그안에 있는 플레인 텍스트의 길이 즉 textContent.length를 가져와서 offset을 저장할때 Selection에서 가져오는 것이 아니라 textContent.length에서 가져오는 것이다.
+
+> 참고로 textContent에서 다른 태그들도 가져올것 같아서 테스트를 해봤으나 태그들을 뺀 플레인 텍스트만 가져왔다.
+>
+> [MDN의 설명](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent)에 더 자세하게 나와있다.
 
 예를 들어서 아래와 같은 텍스트가 있다.
 
