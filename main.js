@@ -29,6 +29,12 @@ document.addEventListener("mouseup", (event) => {
       }
     }
 
-    console.log(parentElement.tagName, indexOfTags);
+    console.log(
+      parentElement.tagName,
+      indexOfTags,
+      selection.anchorOffset,
+      selection.focusOffset,
+      exactText
+    );
   }
 });
