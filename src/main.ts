@@ -1,10 +1,10 @@
 document.addEventListener("mouseup", (event) => {
   if (document.getSelection()?.toString().length) {
-    let selection = document.getSelection() as Selection;
-    let exactText = selection.toString();
+    const selection = document.getSelection() as Selection;
+    const selectedText = selection.toString();
 
-    let span = document.createElement("SPAN");
-    span.textContent = exactText;
+    const span = document.createElement("SPAN");
+    span.textContent = selectedText;
 
     // // ------getRangeAt() 역할 추론하기-----------
     // let ranges = [];
@@ -14,13 +14,13 @@ document.addEventListener("mouseup", (event) => {
     // }
     // // ---------------------------------------
 
-    let range = selection.getRangeAt(0);
+    const range = selection.getRangeAt(0);
     range.deleteContents();
     range.insertNode(span);
 
-    let parentElement = selection.anchorNode?.parentElement as HTMLElement;
+    const parentElement = selection.anchorNode?.parentElement as HTMLElement;
 
-    let listByTagName = document.getElementsByTagName(parentElement.tagName);
+    const listByTagName = document.getElementsByTagName(parentElement.tagName);
 
     let indexOfTags = 0;
     for (let i = 0; i < listByTagName.length; i++) {
@@ -34,13 +34,13 @@ document.addEventListener("mouseup", (event) => {
       indexOfTags,
       selection.anchorOffset,
       selection.focusOffset,
-      exactText
+      selectedText
     );
 
     const elements = document.getElementsByTagName(parentElement.tagName);
     const textContent = elements.item(indexOfTags)?.textContent;
 
-
+    const startOffset = textContent?.indexOf(selectedText);
   }
 });
 
