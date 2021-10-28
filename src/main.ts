@@ -6,14 +6,6 @@ document.addEventListener("mouseup", (event) => {
     const span = document.createElement("SPAN");
     span.textContent = selectedText;
 
-    // // ------getRangeAt() 역할 추론하기-----------
-    // let ranges = [];
-    // for (let i = 0; i < selection.rangeCount; i++) {
-    //   ranges[i] = selection.getRangeAt(i);
-    //   console.log(ranges);
-    // }
-    // // ---------------------------------------
-
     const range = selection.getRangeAt(0);
     range.deleteContents();
     range.insertNode(span);
@@ -29,18 +21,11 @@ document.addEventListener("mouseup", (event) => {
       }
     }
 
-    console.log(
-      parentElement.tagName,
-      indexOfTags,
-      selection.anchorOffset,
-      selection.focusOffset,
-      selectedText
-    );
-
     const elements = document.getElementsByTagName(parentElement.tagName);
     const textContent = elements.item(indexOfTags)?.textContent;
-
     const startOffset = textContent?.indexOf(selectedText);
+
+    console.log(startOffset);
   }
 });
 
