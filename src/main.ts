@@ -1,6 +1,6 @@
 document.addEventListener("mouseup", (event) => {
-  if (document.getSelection().toString().length) {
-    let selection = document.getSelection();
+  if (document.getSelection()?.toString().length) {
+    let selection = document.getSelection() as Selection;
     let exactText = selection.toString();
 
     let span = document.createElement("SPAN");
@@ -18,7 +18,7 @@ document.addEventListener("mouseup", (event) => {
     range.deleteContents();
     range.insertNode(span);
 
-    let parentElement = selection.anchorNode.parentElement;
+    let parentElement = selection.anchorNode?.parentElement as HTMLElement;
 
     let listByTagName = document.getElementsByTagName(parentElement.tagName);
 
@@ -36,10 +36,11 @@ document.addEventListener("mouseup", (event) => {
       selection.focusOffset,
       exactText
     );
+
+    const elements = document.getElementsByTagName(parentElement.tagName);
+    const textContent = elements.item(indexOfTags)?.textContent;
+
+
   }
 });
 
-function getStartOffset(selection: Selection): number {
-    
-    return 0;
-}
