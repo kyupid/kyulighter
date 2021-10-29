@@ -1,3 +1,5 @@
+
+
 document.addEventListener("mouseup", (event) => {
   if (document.getSelection()?.toString().length) {
     const selection = document.getSelection() as Selection;
@@ -25,16 +27,27 @@ document.addEventListener("mouseup", (event) => {
     const textContent = elements.item(indexOfTags)?.textContent;
     const startOffset = textContent?.indexOf(selectedText);
 
-    let m = {
-      tagName: parentElement.tagName,
-      indexOfTags: indexOfTags,
-      textContent: textContent,
-      selectedText: selectedText,
-      startOffset: startOffset
-    };
-    const metaData = JSON.stringify(m);
+    let selectedData = {
+          tagName: parentElement.tagName,
+          indexOfTags: indexOfTags,
+          textContent: textContent,
+          selectedText: selectedText,
+          startOffset: startOffset
+        };
 
-    window.localStorage.setItem('hs', metaData);
+    let metaData: Array<Object>; // TODO: 정확한 타입
+    if (window.localStorage.getItem('meta')) {
+      const s = window.localStorage.getItem('meta') as string;
+      metaData = JSON.parse(s);
+    } else {
+      metaData = [];
+    }
+
+    metaData.push(selectedData);
+    console.log(metaData)
+
+    const strLocationInfo = JSON.stringify(metaData);
+    window.localStorage.setItem('meta', strLocationInfo);
   }
 });
 
