@@ -25,7 +25,18 @@ document.addEventListener("mouseup", (event) => {
     const textContent = elements.item(indexOfTags)?.textContent;
     const startOffset = textContent?.indexOf(selectedText);
 
-    console.log(startOffset);
+    let m = {
+      tagName: parentElement.tagName,
+      indexOfTags: indexOfTags,
+      textContent: textContent,
+      selectedText: selectedText,
+      startOffset: startOffset
+    };
+    const metaData = JSON.stringify(m);
+
+    window.localStorage.setItem('hs', metaData);
   }
 });
+
+
 
