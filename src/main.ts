@@ -1,4 +1,13 @@
+if (window.localStorage.getItem('meta')) {
+  let metaData: Array<Meta>;
+  const s = window.localStorage.getItem('meta') as string;
+  metaData = JSON.parse(s);
+  metaData.forEach(data => { // selection을 어떻게 만들지?
+    // const elements = document.getElementsByTagName(data.tagName);
+    // const textContent = elements.item(data.indexOfTags)?.textContent as string;
 
+  });
+}
 
 document.addEventListener("mouseup", (event) => {
   if (document.getSelection()?.toString().length) {
@@ -24,18 +33,18 @@ document.addEventListener("mouseup", (event) => {
     }
 
     const elements = document.getElementsByTagName(parentElement.tagName);
-    const textContent = elements.item(indexOfTags)?.textContent;
-    const startOffset = textContent?.indexOf(selectedText);
+    const textContent = elements.item(indexOfTags)?.textContent as string;
+    const startOffset = textContent.indexOf(selectedText) as number;
 
-    let selectedData = {
-          tagName: parentElement.tagName,
-          indexOfTags: indexOfTags,
-          textContent: textContent,
-          selectedText: selectedText,
-          startOffset: startOffset
-        };
+    let selectedData = new Meta(
+    parentElement.tagName,
+      indexOfTags,
+      selectedText,
+    startOffset,
+    textContent
+     );
 
-    let metaData: Array<Object>; // TODO: 정확한 타입
+    let metaData: Array<Meta>;
     if (window.localStorage.getItem('meta')) {
       const s = window.localStorage.getItem('meta') as string;
       metaData = JSON.parse(s);
@@ -44,7 +53,6 @@ document.addEventListener("mouseup", (event) => {
     }
 
     metaData.push(selectedData);
-    console.log(metaData)
 
     const strLocationInfo = JSON.stringify(metaData);
     window.localStorage.setItem('meta', strLocationInfo);
