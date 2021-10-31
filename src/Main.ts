@@ -34,29 +34,17 @@ document.addEventListener("mouseup", () => {
         const selection = document.getSelection() as Selection;
         const selectedText = selection.toString();
 
-        const span = document.createElement("SPAN");
-        span.textContent = selectedText;
-
-        const range = selection.getRangeAt(0);
-        range.deleteContents();
-        range.insertNode(span);
+        insertSpanToSelectedText(selection, selectedText);
 
         const parentElement = selection.anchorNode?.parentElement as HTMLElement;
-
-        const listByTagName = document.getElementsByTagName(parentElement.tagName);
-
-        let indexOfTags = 0;
-        for (let i = 0; i < listByTagName.length; i++) {
-            if (parentElement === listByTagName[i]) {
-                indexOfTags = i;
-            }
-        }
-
         const elements = document.getElementsByTagName(parentElement.tagName);
+
+        const indexOfTags = getIndexOfTags(parentElement, elements);
+
         const textContent = elements.item(indexOfTags)?.textContent as string;
         const startOffset = textContent.indexOf(selectedText) as number;
 
-        let selectedData = new Meta(
+        const selectedData = new Meta(
             parentElement.tagName,
             indexOfTags,
             selectedText,
@@ -64,18 +52,40 @@ document.addEventListener("mouseup", () => {
             textContent
         );
 
-        let metaData: Meta[];
-        if (window.localStorage.getItem("meta")) {
-            const s = window.localStorage.getItem("meta") as string;
-            metaData = JSON.parse(s);
-        } else {
-            metaData = [];
-        }
-
-        metaData.push(selectedData);
-        console.log(metaData);
-
-        const strLocationInfo = JSON.stringify(metaData);
-        window.localStorage.setItem("meta", strLocationInfo);
+        setItemToLocalStorage(selectedData);
     }
 });
+
+function insertSpanToSelectedText(selection: Selection, selectedText: string): void {
+    const span = document.createElement("SPAN");
+    span.textContent = selectedText;
+
+    const range = selection.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(span);
+}
+
+function getIndexOfTags(parentElement: HTMLElement, elements: HTMLCollectionOf<Element>): number {
+    let indexOfTags = 0;
+    for (let i = 0; i < elements.length; i++) {
+        if (parentElement === elements[i]) {
+            indexOfTags = i;
+        }
+    }
+    return indexOfTags;
+}
+
+function setItemToLocalStorage(selectedData: Meta) {
+    let metaData: Meta[];
+    if (window.localStorage.getItem("meta")) {
+        const s = window.localStorage.getItem("meta") as string;
+        metaData = JSON.parse(s);
+    } else {
+        metaData = [];
+    }
+
+    metaData.push(selectedData);
+
+    const strLocationInfo = JSON.stringify(metaData);
+    window.localStorage.setItem("meta", strLocationInfo);
+}
