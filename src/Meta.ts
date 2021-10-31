@@ -1,21 +1,9 @@
 export class Meta {
-    tagName: string;
-    indexOfTags: number;
-    selectedText: string;
-    startOffset: number;
-    textContent: string;
-
     constructor(
-        tagName: string,
-        indexOfTags: number,
-        selectedText: string,
-        startOffset: number,
-        textContent: string
-    ) {
-        this.tagName = tagName;
-        this.indexOfTags = indexOfTags;
-        this.selectedText = selectedText;
-        this.startOffset = startOffset;
-        this.textContent = textContent;
-    }
+        public tagName: string,
+        public indexOfTags: number,
+        public selectedText: string,
+        public startOffset: number,
+        public textContent: string
+    ) {}
 }
