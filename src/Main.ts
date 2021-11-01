@@ -19,7 +19,7 @@ if (window.localStorage.getItem("meta")) {
             if (index >= 0) {
                 innerHTML =
                     innerHTML.substring(0, index) +
-                    "<span>" +
+                    "<span class='yellow-highlight'>" +
                     innerHTML.substring(index, index + data.selectedText.length) +
                     "</span>" +
                     innerHTML.substring(index + data.selectedText.length);
@@ -59,6 +59,7 @@ document.addEventListener("mouseup", () => {
 function insertSpanToSelectedText(selection: Selection, selectedText: string): void {
     const span = document.createElement("SPAN");
     span.textContent = selectedText;
+    span.setAttribute("class","yellow-highlight")
 
     const range = selection.getRangeAt(0);
     range.deleteContents();
