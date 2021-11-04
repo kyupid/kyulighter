@@ -34,7 +34,49 @@ document.addEventListener("mouseup", () => {
         const selection = document.getSelection() as Selection;
         const selectedText = selection.toString();
 
-        insertSpanToSelectedText(selection, selectedText);
+        const anchorNodeText = selection.anchorNode?.parentElement?.textContent as string;
+        const focusNodeText = selection.focusNode?.parentElement?.textContent as string;
+        const fullText = anchorNodeText + focusNodeText;
+
+        console.log(fullText);
+        console.log(fullText.indexOf(selectedText));
+        console.log(selectedText.length);
+
+        const startIndex = fullText.indexOf(selectedText);
+        const endIndex = startIndex + selectedText.length - 1;
+
+        const leftTextStartIndex = startIndex;
+        const leftTextEndIndex = focusNodeText.length;
+
+        const leftText = fullText.substring(0, startIndex);
+        const rightText = fullText.substring(endIndex + 1, fullText.length - 10);
+
+        const leftSelectedText = focusNodeText.substring(leftTextStartIndex, leftTextEndIndex);
+
+        const rightSelectedText = anchorNodeText.substring(leftTextEndIndex, endIndex + 1);
+
+
+        console.log("leftTexxt: ", leftText);
+        console.log("rightText: ", rightText);
+        console.log(leftSelectedText);
+
+        const temp = "<span class='yellow-highlight'>" + rightSelectedText + '</span>'
+
+        console.log(temp);
+        // @ts-ignore
+        selection.focusNode?.parentElement?.innerHTML = leftText + "<span class='yellow-highlight'>" + leftSelectedText + '</span>';
+
+        const anchorInnerHTML = selection.anchorNode?.parentElement?.innerHTML as string;
+        const a = anchorInnerHTML.substring(0, anchorInnerHTML.indexOf(rightSelectedText));
+
+        console.log(a);
+        // @ts-ignore
+        selection.anchorNode?.parentElement?.innerHTML = a + temp + rightText;
+
+        // @ts-ignore
+        // selection.anchorNode?.parentElement?.innerHTML = '432';
+
+        // insertSpanToSelectedText(selection, selectedText);
 
         const parentElement = selection.anchorNode?.parentElement as HTMLElement;
         const elements = document.getElementsByTagName(parentElement.tagName);
@@ -59,7 +101,7 @@ document.addEventListener("mouseup", () => {
 function insertSpanToSelectedText(selection: Selection, selectedText: string): void {
     const span = document.createElement("SPAN");
     span.textContent = selectedText;
-    span.setAttribute("class","yellow-highlight")
+    span.setAttribute("class", "yellow-highlight")
 
     const range = selection.getRangeAt(0);
     range.deleteContents();
